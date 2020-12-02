@@ -1,4 +1,4 @@
-from .cookie import TOKEN
+from ..cookie import TOKEN
 import requests
 
 
