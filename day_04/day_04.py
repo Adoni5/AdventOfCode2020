@@ -1,21 +1,6 @@
 from helpers.utils import get_puzzle_input
 from jsonschema import validate, exceptions
 
-test_input = """ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
-byr:1937 iyr:2017 cid:147 hgt:183cm
-
-iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
-hcl:#cfa07d byr:1929
-
-hcl:#ae17e1 iyr:2013
-eyr:2024
-ecl:brn pid:760753108 byr:1931
-hgt:179cm
-
-hcl:#cfa07d eyr:2025 pid:166559648
-iyr:2011 ecl:brn hgt:59in
-"""
-
 schema = {
     "required": ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"],
     "properties": {
@@ -31,8 +16,10 @@ schema = {
         "pid": {"type": "string", "pattern": "^([0-9]{9})$"},
     },
 }
+
 test_input = get_puzzle_input(4)
-valid_count = 0
+part_1_valid_count = 0
+part_2_valid_count = 0
 passport_strings = test_input.split("\n\n")
 int_keys = {"byr", "iyr", "eyr"}
 for passport in passport_strings:
@@ -40,9 +27,11 @@ for passport in passport_strings:
         k: (int(v) if k in int_keys else v)
         for k, v in (e.split(":") for e in passport.split())
     }
+    part_1_valid_count += set(schema["required"]).issubset(set(fields.keys()))
     try:
         validate(instance=fields, schema=schema)
     except exceptions.ValidationError as err:
         continue
-    valid_count += 1
-print(f"Valid passports {valid_count}")
+    part_2_valid_count += 1
+print(f"Valid passports part 1: {part_1_valid_count}")
+print(f"Valid passports part 2: {part_2_valid_count}")
