@@ -9,6 +9,7 @@ acc +1
 jmp -4
 acc +6"""
 
+
 class GameConsole:
     def __init__(self, input):
         self.boot_input = input.splitlines()
@@ -18,7 +19,6 @@ class GameConsole:
         self.indexes = {0}
         self.changed_index = False
         self.changed_indices = []
-
 
     def jmp(self, amount):
         self.index += amount
