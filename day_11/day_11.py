@@ -37,7 +37,6 @@ while run:
             continue
         x, y = position
         adjacent_seats = {}
-        # todo here is where we need to change the getting other seats code
         for dx, dy in adjacency:
             keep_looking = True
             i, j = 1, 1
